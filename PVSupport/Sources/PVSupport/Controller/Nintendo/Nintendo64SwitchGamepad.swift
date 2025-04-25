@@ -18,6 +18,7 @@ class Nintendo64SwitchGamepad: GCExtendedGamepad {
     let internalButtonB: GCControllerButtonInput
     let internalButtonA: GCControllerButtonInput
     let internalButtonStart: GCControllerButtonInput
+    
     //TODO: find this mapping
     var internalButtonShare: GCControllerButtonInput? = nil
     //TODO: find this mapping
