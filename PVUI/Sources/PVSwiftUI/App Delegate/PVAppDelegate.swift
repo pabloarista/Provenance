@@ -311,7 +311,7 @@ public final class PVAppDelegate: UIResponder, UIApplicationDelegate, Observable
         _initICloud()
         _initUITheme()
         _initThemeListener()
-        
+        GCController.initNintendoSwitchControllers()
         #if canImport(PVWebServer)
         // Initialize web server notifications
         setupWebServerNotifications()
