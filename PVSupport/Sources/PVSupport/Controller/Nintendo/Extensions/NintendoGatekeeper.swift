@@ -5,8 +5,7 @@
 //  Created by Pablo Arista on 4/24/25.
 //
 
-@MainActor
-private var n64GamepadKey: UInt8 = 0
+nonisolated(unsafe) private var n64GamepadKey: UInt8 = 0
 
 public extension GCController {
     // This is a static block that will execute only once, when GCController is first accessed
@@ -22,7 +21,6 @@ public extension GCController {
 
     // will try to find the correct NSO controller and if not just return the current controller.
     @objc
-    @MainActor
     func swizzled_extendedGamepad() -> GCExtendedGamepad? {
         let originalExtendedGamepad = swizzled_extendedGamepad()  // Calls original due to swizzling
 
@@ -31,7 +29,9 @@ public extension GCController {
         }
         
         // Try to fetch the cached Nintendo64SwitchGamepad
-        if let cachedGamepad = objc_getAssociatedObject(self, &n64GamepadKey) as? Nintendo64SwitchGamepad {
+        if let cachedGamepad = objc_getAssociatedObject(self, &n64GamepadKey) as? Nintendo64SwitchGamepad,
+           //ensure that this cached extended gamepad corresponds to the current controller
+           cachedGamepad.controller == self {
             return cachedGamepad
         }
         
